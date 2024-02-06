@@ -23,14 +23,23 @@ import net.logandhillon.controllerlink.server.ServerMain;
 
 public class Main {
     public static void main(String[] args) {
+        boolean missingEntrypoint = true;
         for (String arg: args) {
             if (arg.equals("--server") || arg.equals("-S")) {
                 ServerMain.start(args);
+                missingEntrypoint = false;
                 break;
             } else if (arg.equals("--client") || arg.equals("-C")) {
                 ClientMain.start(args);
+                missingEntrypoint = false;
                 break;
             }
+        }
+
+        if (missingEntrypoint) {
+            System.err.println("""
+                    Couldn't find entrypoint. Do not forget to pass --client or --server as an argument.
+                    """);
         }
     }
 }
