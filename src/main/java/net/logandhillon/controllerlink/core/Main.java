@@ -20,8 +20,12 @@ package net.logandhillon.controllerlink.core;
 
 import net.logandhillon.controllerlink.client.ClientMain;
 import net.logandhillon.controllerlink.server.ServerMain;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 
 public class Main {
+    private static final Logger LOG = LoggerContext.getContext().getLogger(Main.class);
+
     public static void main(String[] args) {
         boolean missingEntrypoint = true;
         for (String arg: args) {
@@ -36,10 +40,7 @@ public class Main {
             }
         }
 
-        if (missingEntrypoint) {
-            System.err.println("""
-                    Couldn't find entrypoint. Do not forget to pass --client or --server as an argument.
-                    """);
-        }
+        if (missingEntrypoint)
+            LOG.fatal("Couldn't find entrypoint. Do not forget to pass --client or --server as an argument.");
     }
 }

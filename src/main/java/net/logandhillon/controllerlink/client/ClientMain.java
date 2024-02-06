@@ -18,8 +18,13 @@
 
 package net.logandhillon.controllerlink.client;
 
-public class ClientMain {
-    public static void start(String[] args) {
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 
+public class ClientMain {
+    private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
+
+    public static void start(String[] args) {
+        LOG.info("Starting ControllerLink client");
     }
 }
