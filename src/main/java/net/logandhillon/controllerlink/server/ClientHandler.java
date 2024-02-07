@@ -18,6 +18,7 @@
 
 package net.logandhillon.controllerlink.server;
 
+import net.logandhillon.controllerlink.ControllerLinkPacket;
 import net.logandhillon.controllerlink.Header;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -72,7 +73,13 @@ public class ClientHandler {
             while ((line = in.readLine()) != null) {
                 System.out.println(address + ": " + line);
 
-                if (line.equals("ver")) out.println(ServerMain.HEADER);
+                ControllerLinkPacket packet = ControllerLinkPacket.fromString(line);
+                if (packet == null) {
+                    out.println("Bad packet");
+                    continue;
+                }
+
+                if (packet.command.equals("cmd")) if (packet.content.equals("ver")) out.println(ServerMain.HEADER);
             }
 
         } catch (IOException e) {

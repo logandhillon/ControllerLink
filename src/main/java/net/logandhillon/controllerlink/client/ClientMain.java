@@ -50,7 +50,7 @@ public final class ClientMain {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true)
             ) {
                 out.println("ver:"+HEADER);
-                out.println("ver");
+                out.println("cmd:ver");
                 Header remoteHeader = Header.fromString(in.readLine());
                 if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
                 LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
