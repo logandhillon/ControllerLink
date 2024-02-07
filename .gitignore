@@ -15,6 +15,9 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/misc.xml
+.idea/discord.xml
+.idea/gradle.xml
 
 ### Eclipse ###
 .apt_generated
