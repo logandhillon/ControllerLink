@@ -18,17 +18,7 @@
 
 package net.logandhillon.controllerlink.gamepad;
 
-public class InputPacket {
-    private final int joystickId;
-    private final int buttonId;
-    private final int buttonVal;
-
-    public InputPacket(int joystickId, int buttonId, int buttonVal) {
-        this.joystickId = joystickId;
-        this.buttonId = buttonId;
-        this.buttonVal = buttonVal;
-    }
-
+public record InputPacket(int joystickId, int buttonId, int buttonVal) {
     public static InputPacket fromString(String s) {
         String[] parts = s.split(";");
         if (parts.length < 2) return null;
@@ -37,6 +27,6 @@ public class InputPacket {
 
     @Override
     public String toString() {
-        return "in:"+joystickId+";"+buttonId+";"+buttonVal;
+        return "in:" + joystickId + ";" + buttonId + ";" + buttonVal;
     }
 }

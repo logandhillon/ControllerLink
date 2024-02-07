@@ -20,6 +20,7 @@ package net.logandhillon.controllerlink.server;
 
 import net.logandhillon.controllerlink.ControllerLinkPacket;
 import net.logandhillon.controllerlink.Header;
+import net.logandhillon.controllerlink.gamepad.InputPacket;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -105,7 +106,7 @@ public class ClientHandler {
 
                 if (packet.command.equals("cmd")) { if (packet.content.equals("ver")) out.println(ServerMain.HEADER); }
                 else if (packet.command.equals("in")) {
-                    // TODO: 02-07-2024 Handle joystick input (e.g. 0;0;1) that thing
+                    System.out.println(InputPacket.fromString(packet.content).buttonId());
                 }
             }
 
