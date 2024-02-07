@@ -31,7 +31,13 @@ public final class ServerMain {
     public static final int DEFAULT_PORT = 4350;
 
     public static void start(String[] args) {
-        try (ServerSocket socket = new ServerSocket(DEFAULT_PORT)) {
+        int port = DEFAULT_PORT;
+
+        for (int i = 0; i < args.length; i++)
+            if (args[i].equals("--port") && args.length > i + 1)
+                port = Integer.parseInt(args[i + 1]);
+
+        try (ServerSocket socket = new ServerSocket(port)) {
             LOG.info("Starting ControllerLink server on {}", new InetSocketAddress(DEFAULT_PORT));
 
             while (true) {
