@@ -19,6 +19,7 @@
 package net.logandhillon.controllerlink.client;
 
 import net.logandhillon.controllerlink.Header;
+import net.logandhillon.controllerlink.UnexpectedServerException;
 import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -42,14 +43,16 @@ public final class ClientMain {
 
         try (Socket socket = new Socket()) {
             socket.connect(address);
-            LOG.info("Connected to {}", address);
 
             try (
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true)
             ) {
+                out.println("ver:"+HEADER);
                 out.println("ver");
-                LOG.info("Server version: " + in.readLine());
+                Header remoteHeader = Header.fromString(in.readLine());
+                if (remoteHeader == null || !remoteHeader.validate(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
+                LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -18,6 +18,8 @@
 
 package net.logandhillon.controllerlink.server;
 
+import net.logandhillon.controllerlink.Header;
+import net.logandhillon.controllerlink.UnexpectedServerException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -46,8 +48,25 @@ public class ClientHandler {
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true)
         ) {
             InetAddress address = client.getInetAddress();
-            LOG.info("Accepted connection from " + address);
+            LOG.info("Handling connection from " + address);
             String line;
+
+            if ((line = in.readLine()).startsWith("ver:")) {
+                Header remoteHeader = Header.fromString(line.split(":")[1]);
+                if (remoteHeader == null || !remoteHeader.validate(Header.Environment.CLIENT)) {
+                    LOG.warn("Unexpected or invalid client header: " + remoteHeader);
+                    out.println("Unexpected or invalid client header");
+                    LOG.info("Forcibly disconnecting " + address);
+                    client.close();
+                    return;
+                }
+                LOG.info("Accepted connection from {} client v{}", remoteHeader.name, remoteHeader.version);
+            } else {
+                LOG.warn("{} did not send their version, forcibly disconnecting", address);
+                out.println("Unexpected or invalid client header");
+                client.close();
+                return;
+            }
 
             while ((line = in.readLine()) != null) {
                 LOG.info("Received from {}: {}", address, line);

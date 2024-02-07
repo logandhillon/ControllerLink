@@ -43,7 +43,7 @@ public final class Header {
         public static final String SERVER = "server";
     }
 
-    public Header fromString(String s) {
+    public static Header fromString(String s) {
         String[] parts = s.split(",");
         if (parts.length < 3) return null;
         return new Header(parts[0], parts[1], parts[2], parts[3]);
@@ -52,5 +52,9 @@ public final class Header {
     @Override
     public String toString() {
         return vendor + "," + name + "," + environment + "," + version;
+    }
+
+    public boolean validate(String expectedEnvironment) {
+        return vendor.equals("logandhillon") && name.equals("ControllerLink") && environment.equals(expectedEnvironment);
     }
 }
