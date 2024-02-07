@@ -26,7 +26,6 @@ import net.logandhillon.controllerlink.gamepad.GamepadListener;
 import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.libsdl.SDL;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,7 +54,7 @@ public final class ClientMain {
                 out.println("ver:"+HEADER);
                 out.println("ver");
                 Header remoteHeader = Header.fromString(in.readLine());
-                if (remoteHeader == null || !remoteHeader.validate(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
+                if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
                 LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
 
                 try {

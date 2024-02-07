@@ -54,7 +54,7 @@ public final class Header {
         return vendor + "," + name + "," + environment + "," + version;
     }
 
-    public boolean validate(String expectedEnvironment) {
-        return vendor.equals("logandhillon") && name.equals("ControllerLink") && environment.equals(expectedEnvironment);
+    public boolean isInvalid(String expectedEnvironment) {
+        return !vendor.equals("logandhillon") || !name.equals("ControllerLink") || !environment.equals(expectedEnvironment);
     }
 }

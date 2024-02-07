@@ -19,7 +19,6 @@
 package net.logandhillon.controllerlink.server;
 
 import net.logandhillon.controllerlink.Header;
-import net.logandhillon.controllerlink.UnexpectedServerException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -53,7 +52,7 @@ public class ClientHandler {
 
             if ((line = in.readLine()).startsWith("ver:")) {
                 Header remoteHeader = Header.fromString(line.split(":")[1]);
-                if (remoteHeader == null || !remoteHeader.validate(Header.Environment.CLIENT)) {
+                if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.CLIENT)) {
                     LOG.warn("Unexpected or invalid client header: " + remoteHeader);
                     out.println("Unexpected or invalid client header");
                     LOG.info("Forcibly disconnecting " + address);
