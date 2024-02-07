@@ -18,22 +18,24 @@
 
 package net.logandhillon.controllerlink;
 
+import net.logandhillon.controllerlink.core.Main;
+
 public final class Header {
     public final String vendor;
-    public final String name;
+    public final String brand;
     public final String environment;
     public final String version;
 
-    private Header(String vendor, String name, String environment, String version) {
+    private Header(String vendor, String brand, String environment, String version) {
         this.vendor = vendor;
-        this.name = name;
+        this.brand = brand;
         this.environment = environment;
         this.version = version;
     }
 
     public Header(String environment) {
         this.vendor = "logandhillon";
-        this.name = "ControllerLink";
+        this.brand = "ControllerLink";
         this.environment = environment;
         this.version = "0.1.0-dev";
     }
@@ -51,10 +53,13 @@ public final class Header {
 
     @Override
     public String toString() {
-        return vendor + "," + name + "," + environment + "," + version;
+        return vendor + "," + brand + "," + environment + "," + version;
     }
 
     public boolean isInvalid(String expectedEnvironment) {
-        return !vendor.equals("logandhillon") || !name.equals("ControllerLink") || !environment.equals(expectedEnvironment);
+        if (Main.strictHeaders)
+            return !vendor.equals("logandhillon") || !brand.equals("ControllerLink") || !environment.equals(expectedEnvironment);
+        else
+            return !environment.equals(expectedEnvironment);
     }
 }

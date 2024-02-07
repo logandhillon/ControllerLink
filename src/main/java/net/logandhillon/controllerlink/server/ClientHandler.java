@@ -87,7 +87,7 @@ public class ClientHandler {
                     client.close();
                     return;
                 }
-                LOG.info("Accepted connection from {} client v{}", remoteHeader.name, remoteHeader.version);
+                LOG.info("Accepted connection from {} client v{}", remoteHeader.brand, remoteHeader.version);
             } else {
                 LOG.warn("{} did not send their version, forcibly disconnecting", address);
                 out.println("Unexpected or invalid client header");

@@ -25,6 +25,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 
 public final class Main {
     private static final Logger LOG = LoggerContext.getContext().getLogger(Main.class);
+    public static boolean strictHeaders = false;
 
     public static void main(String[] args) {
         boolean missingEntrypoint = true;
@@ -37,7 +38,7 @@ public final class Main {
                 ClientMain.start(args);
                 missingEntrypoint = false;
                 break;
-            }
+            } else if (arg.equals("--strictHeaders")) strictHeaders = true;
         }
 
         if (missingEntrypoint)

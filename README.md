@@ -20,5 +20,7 @@ Run the program with the `--server` argument.
 
 Set the port the server listens on with `--port xxxx`
 
+You can only allow clients of the same brand to connect with `--strictHeaders`
+
 Once a machine attempts to connect, and you approve it, you may use the controller from the remote machine as if it was
 on this machine.

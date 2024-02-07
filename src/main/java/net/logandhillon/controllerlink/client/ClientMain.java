@@ -53,7 +53,7 @@ public final class ClientMain {
                 out.println("cmd:ver");
                 Header remoteHeader = Header.fromString(in.readLine());
                 if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
-                LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
+                LOG.info("Connected to {} server v{}", remoteHeader.brand, remoteHeader.version);
 
                 new GamepadInputHandler(out).handle();
             }
