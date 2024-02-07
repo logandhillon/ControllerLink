@@ -23,7 +23,7 @@ import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
-public class Main {
+public final class Main {
     private static final Logger LOG = LoggerContext.getContext().getLogger(Main.class);
 
     public static void main(String[] args) {

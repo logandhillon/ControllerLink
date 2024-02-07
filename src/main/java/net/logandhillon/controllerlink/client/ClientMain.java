@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public class ClientMain {
+public final class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
 
     public static void start(String[] args) {
