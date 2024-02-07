@@ -55,7 +55,7 @@ public final class ClientMain {
                 if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
                 LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
 
-                while (true) new GamepadInputHandler(out).handle();
+                new GamepadInputHandler(out).handle();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
