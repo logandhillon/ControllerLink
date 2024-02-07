@@ -40,6 +40,7 @@ public final class ServerMain {
         try (ServerSocket socket = new ServerSocket(port)) {
             LOG.info("Starting ControllerLink server on {}", new InetSocketAddress(DEFAULT_PORT));
 
+            //noinspection InfiniteLoopStatement
             while (true) {
                 if (!socket.isBound()) continue;
                 Socket client = socket.accept();
