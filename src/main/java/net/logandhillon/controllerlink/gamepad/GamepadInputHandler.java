@@ -51,10 +51,13 @@ public class GamepadInputHandler {
         // TODO: 02-07-2024 Adapt to differentiate gamepads
         for (int jid = GLFW.GLFW_JOYSTICK_1; jid <= GLFW.GLFW_JOYSTICK_LAST; jid++) {
             if (GLFW.glfwJoystickPresent(jid)) {
+                // TODO: 02-07-2024 Handle axes
                 FloatBuffer axes = GLFW.glfwGetJoystickAxes(jid);
                 ByteBuffer buttons = GLFW.glfwGetJoystickButtons(jid);
 
-                if ((buttons != null ? buttons.get(0) : 0) == 1) out.println("Button A is pressed");
+                for (int i = 0; i < buttons.capacity(); i++) {
+                    if (buttons.get(i) == 1) out.println(i);
+                }
             }
         }
     }
