@@ -30,13 +30,13 @@ public class InputPacket {
     }
 
     public static InputPacket fromString(String s) {
-        String[] parts = s.split(":");
+        String[] parts = s.split(";");
         if (parts.length < 2) return null;
         return new InputPacket(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
     }
 
     @Override
     public String toString() {
-        return joystickId+":"+buttonId+":"+buttonVal;
+        return joystickId+";"+buttonId+";"+buttonVal;
     }
 }
