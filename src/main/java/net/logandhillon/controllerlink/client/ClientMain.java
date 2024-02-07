@@ -42,12 +42,8 @@ public final class ClientMain {
             LOG.info("Connected to {}", address);
 
             try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    LOG.info("Server says: " + inputLine);
-                }
+                LOG.info("Server version: " + in.readLine());
             }
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
