@@ -29,16 +29,23 @@ public final class Main {
 
     public static void main(String[] args) {
         boolean missingEntrypoint = true;
+        label:
         for (String arg: args) {
-            if (arg.equals("--server") || arg.equals("-S")) {
-                ServerMain.start(args);
-                missingEntrypoint = false;
-                break;
-            } else if (arg.equals("--client") || arg.equals("-C")) {
-                ClientMain.start(args);
-                missingEntrypoint = false;
-                break;
-            } else if (arg.equals("--strictHeaders")) strictHeaders = true;
+            switch (arg) {
+                case "--server":
+                case "-S":
+                    ServerMain.start(args);
+                    missingEntrypoint = false;
+                    break label;
+                case "--client":
+                case "-C":
+                    ClientMain.start(args);
+                    missingEntrypoint = false;
+                    break label;
+                case "--strictHeaders":
+                    strictHeaders = true;
+                    break;
+            }
         }
 
         if (missingEntrypoint)
