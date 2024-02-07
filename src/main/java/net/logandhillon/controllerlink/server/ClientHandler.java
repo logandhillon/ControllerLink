@@ -70,7 +70,7 @@ public class ClientHandler {
             }
 
             while ((line = in.readLine()) != null) {
-                LOG.info("Received from {}: {}", address, line);
+                System.out.println(address + ": " + line);
 
                 if (line.equals("ver")) out.println(ServerMain.HEADER);
             }
