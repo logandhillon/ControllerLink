@@ -47,7 +47,7 @@ public class ClientHandler {
         ) {
             InetAddress address = client.getInetAddress();
             LOG.info("Accepted connection from " + address);
-            out.println("logandhillon-ControllerLink-0.1.0-dev");
+            out.println(ServerMain.VERSION);
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
