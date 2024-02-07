@@ -32,7 +32,7 @@ import java.net.Socket;
 
 public final class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
-    public static final Version VERSION = new Version("logandhillon","ControllerLink","client","0.1.0-dev");
+    public static final Version VERSION = new Version("logandhillon","ControllerLink", Version.Environment.CLIENT,"0.1.0-dev");
 
     public static void start(String[] args) {
         LOG.info("Starting ControllerLink client");
