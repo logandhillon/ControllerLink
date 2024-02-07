@@ -29,9 +29,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ClientHandler {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientHandler.class);
+    private static final ArrayList<Socket> connectedClients = new ArrayList<>();
+    private static final Scanner STDIN = new Scanner(System.in);
     private final Socket client;
 
     private ClientHandler(Socket clientSocket) {
@@ -39,9 +43,29 @@ public class ClientHandler {
     }
 
     public static void handle(Socket client) {
-        Thread t = new Thread(() -> new ClientHandler(client).run());
-        t.setName("Client-Handler-" + t.getName().split("Thread-")[1]);
-        t.start();
+        System.out.print("Allow "+client.getInetAddress()+" to connect? [y/n] ");
+        out:
+        try {
+            while (true) {
+                switch (STDIN.nextLine().toLowerCase()) {
+                    case "y" -> {
+                        break out;
+                    }
+                    case "n" -> {
+                        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                        out.println("Connection rejected");
+                        LOG.info("Connection from {} has been rejected", client.getInetAddress());
+                        client.close();
+                        return;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        connectedClients.add(client);
+        new Thread(() -> new ClientHandler(client).run(), "Client-Handler-" + connectedClients.size()).start();
     }
 
     private void run() {
