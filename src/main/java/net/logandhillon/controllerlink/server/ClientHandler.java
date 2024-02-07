@@ -38,7 +38,9 @@ public class ClientHandler {
     }
 
     public static void handle(Socket client) {
-        new Thread(() -> new ClientHandler(client).run()).start();
+        Thread t = new Thread(() -> new ClientHandler(client).run());
+        t.setName("Client-Handler-" + t.getName().split("Thread-")[1]);
+        t.start();
     }
 
     private void run() {
