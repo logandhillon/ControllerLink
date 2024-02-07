@@ -52,7 +52,7 @@ public class ClientHandler {
             while ((line = in.readLine()) != null) {
                 LOG.info("Received from {}: {}", address, line);
 
-                if (line.equals("ver")) out.println(ServerMain.VERSION);
+                if (line.equals("ver")) out.println(ServerMain.HEADER);
             }
 
         } catch (IOException e) {

@@ -18,20 +18,20 @@
 
 package net.logandhillon.controllerlink;
 
-public final class Version {
+public final class Header {
     public final String vendor;
     public final String name;
     public final String environment;
     public final String version;
 
-    private Version(String vendor, String name, String environment, String version) {
+    private Header(String vendor, String name, String environment, String version) {
         this.vendor = vendor;
         this.name = name;
         this.environment = environment;
         this.version = version;
     }
 
-    public Version(String environment) {
+    public Header(String environment) {
         this.vendor = "logandhillon";
         this.name = "ControllerLink";
         this.environment = environment;
@@ -43,10 +43,10 @@ public final class Version {
         public static final String SERVER = "server";
     }
 
-    public Version fromString(String s) {
+    public Header fromString(String s) {
         String[] parts = s.split(",");
         if (parts.length < 3) return null;
-        return new Version(parts[0], parts[1], parts[2], parts[3]);
+        return new Header(parts[0], parts[1], parts[2], parts[3]);
     }
 
     @Override

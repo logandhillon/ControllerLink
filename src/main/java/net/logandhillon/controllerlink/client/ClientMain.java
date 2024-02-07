@@ -18,7 +18,7 @@
 
 package net.logandhillon.controllerlink.client;
 
-import net.logandhillon.controllerlink.Version;
+import net.logandhillon.controllerlink.Header;
 import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -32,10 +32,10 @@ import java.net.Socket;
 
 public final class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
-    public static final Version VERSION = new Version(Version.Environment.CLIENT);
+    public static final Header HEADER = new Header(Header.Environment.CLIENT);
 
     public static void start(String[] args) {
-        LOG.info("Starting ControllerLink client v{}", VERSION.version);
+        LOG.info("Starting ControllerLink client v{}", HEADER.version);
 
         InetSocketAddress address = getSocketAddress(args);
         if (address == null) throw new NullPointerException("Could not find target! Do not forget to pass a target IP with --target xxx.xxx.xxx.xxx");

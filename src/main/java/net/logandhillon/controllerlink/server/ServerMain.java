@@ -18,7 +18,7 @@
 
 package net.logandhillon.controllerlink.server;
 
-import net.logandhillon.controllerlink.Version;
+import net.logandhillon.controllerlink.Header;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -30,7 +30,7 @@ import java.net.Socket;
 public final class ServerMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ServerMain.class);
     public static final int DEFAULT_PORT = 4350;
-    public static final Version VERSION = new Version(Version.Environment.SERVER);
+    public static final Header HEADER = new Header(Header.Environment.SERVER);
 
     public static void start(String[] args) {
         int port = DEFAULT_PORT;
@@ -40,7 +40,7 @@ public final class ServerMain {
                 port = Integer.parseInt(args[i + 1]);
 
         try (ServerSocket socket = new ServerSocket(port)) {
-            LOG.info("Starting ControllerLink server v{} on {}", VERSION.version, new InetSocketAddress(DEFAULT_PORT));
+            LOG.info("Starting ControllerLink server v{} on {}", HEADER.version, new InetSocketAddress(DEFAULT_PORT));
 
             //noinspection InfiniteLoopStatement
             while (true) {
