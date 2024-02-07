@@ -18,6 +18,7 @@
 
 package net.logandhillon.controllerlink.client;
 
+import net.logandhillon.controllerlink.Version;
 import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -25,11 +26,13 @@ import org.apache.logging.log4j.core.LoggerContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public final class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
+    public static final Version VERSION = new Version("logandhillon","ControllerLink","client","0.1.0-dev");
 
     public static void start(String[] args) {
         LOG.info("Starting ControllerLink client");
@@ -41,7 +44,11 @@ public final class ClientMain {
             socket.connect(address);
             LOG.info("Connected to {}", address);
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+            try (
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true)
+            ) {
+                out.println("ver");
                 LOG.info("Server version: " + in.readLine());
             }
         } catch (IOException e) {

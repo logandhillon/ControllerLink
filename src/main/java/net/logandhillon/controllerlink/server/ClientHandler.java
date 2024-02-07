@@ -47,11 +47,12 @@ public class ClientHandler {
         ) {
             InetAddress address = client.getInetAddress();
             LOG.info("Accepted connection from " + address);
-            out.println(ServerMain.VERSION);
-            String inputLine;
+            String line;
 
-            while ((inputLine = in.readLine()) != null) {
-                LOG.info("Received from {}: {}", address, inputLine);
+            while ((line = in.readLine()) != null) {
+                LOG.info("Received from {}: {}", address, line);
+
+                if (line.equals("ver")) out.println(ServerMain.VERSION);
             }
 
         } catch (IOException e) {

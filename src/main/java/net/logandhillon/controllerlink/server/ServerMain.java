@@ -18,6 +18,7 @@
 
 package net.logandhillon.controllerlink.server;
 
+import net.logandhillon.controllerlink.Version;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
@@ -29,7 +30,7 @@ import java.net.Socket;
 public final class ServerMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ServerMain.class);
     public static final int DEFAULT_PORT = 4350;
-    public static final String VERSION = "logandhillon-ControllerLink-0.1.0-dev";
+    public static final Version VERSION = new Version("logandhillon","ControllerLink","client","0.1.0-dev");
 
     public static void start(String[] args) {
         int port = DEFAULT_PORT;
