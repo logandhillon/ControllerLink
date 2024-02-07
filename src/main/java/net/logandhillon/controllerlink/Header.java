@@ -57,9 +57,10 @@ public final class Header {
     }
 
     public boolean isInvalid(String expectedEnvironment) {
-        if (Main.strictHeaders)
+        if (Main.strictHeaders) {
             return !vendor.equals("logandhillon") || !brand.equals("ControllerLink") || !environment.equals(expectedEnvironment);
-        else
+        } else {
             return !environment.equals(expectedEnvironment);
+        }
     }
 }
