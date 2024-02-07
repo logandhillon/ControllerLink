@@ -18,7 +18,26 @@
 
 package net.logandhillon.controllerlink;
 
-public record Version(String author, String name, String environment, String version) {
+public final class Version {
+    public final String vendor;
+    public final String name;
+    public final String environment;
+    public final String version;
+
+    private Version(String vendor, String name, String environment, String version) {
+        this.vendor = vendor;
+        this.name = name;
+        this.environment = environment;
+        this.version = version;
+    }
+
+    public Version(String environment) {
+        this.vendor = "logandhillon";
+        this.name = "ControllerLink";
+        this.environment = environment;
+        this.version = "0.1.0-dev";
+    }
+
     public static class Environment {
         public static final String CLIENT = "client";
         public static final String SERVER = "server";
@@ -32,6 +51,6 @@ public record Version(String author, String name, String environment, String ver
 
     @Override
     public String toString() {
-        return author + "," + name + "," + environment + "," + version;
+        return vendor + "," + name + "," + environment + "," + version;
     }
 }

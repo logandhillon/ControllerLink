@@ -32,10 +32,10 @@ import java.net.Socket;
 
 public final class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
-    public static final Version VERSION = new Version("logandhillon","ControllerLink", Version.Environment.CLIENT,"0.1.0-dev");
+    public static final Version VERSION = new Version(Version.Environment.CLIENT);
 
     public static void start(String[] args) {
-        LOG.info("Starting ControllerLink client");
+        LOG.info("Starting ControllerLink client v{}", VERSION.version);
 
         InetSocketAddress address = getSocketAddress(args);
         if (address == null) throw new NullPointerException("Could not find target! Do not forget to pass a target IP with --target xxx.xxx.xxx.xxx");
