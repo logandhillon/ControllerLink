@@ -3,6 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="net.logandhillon.controllerlink.core.Main" />
     <module name="ControllerLink.main" />
     <option name="PROGRAM_PARAMETERS" value="--client --target localhost" />
+    <option name="VM_PARAMETERS" value="-XstartOnFirstThread" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.logandhillon.controllerlink.core.*" />

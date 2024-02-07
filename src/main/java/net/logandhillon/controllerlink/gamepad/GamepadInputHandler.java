@@ -21,11 +21,15 @@ package net.logandhillon.controllerlink.gamepad;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWJoystickCallback;
 
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 public class GamepadInputHandler {
-    public static void main(String[] args) {
+    private PrintWriter out;
+
+    public GamepadInputHandler(PrintWriter writeTo) {
+        out = writeTo;
         if (!GLFW.glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
 
         GLFW.glfwSetJoystickCallback(new GLFWJoystickCallback() {
@@ -39,17 +43,18 @@ public class GamepadInputHandler {
                 }
             }
         });
+    }
 
-        while (true) {
-            GLFW.glfwPollEvents();
+    public void handle() {
+        GLFW.glfwPollEvents();
 
-            for (int jid = GLFW.GLFW_JOYSTICK_1; jid <= GLFW.GLFW_JOYSTICK_LAST; jid++) {
-                if (GLFW.glfwJoystickPresent(jid)) {
-                    FloatBuffer axes = GLFW.glfwGetJoystickAxes(jid);
-                    ByteBuffer buttons = GLFW.glfwGetJoystickButtons(jid);
+        // TODO: 02-07-2024 Adapt to differentiate gamepads
+        for (int jid = GLFW.GLFW_JOYSTICK_1; jid <= GLFW.GLFW_JOYSTICK_LAST; jid++) {
+            if (GLFW.glfwJoystickPresent(jid)) {
+                FloatBuffer axes = GLFW.glfwGetJoystickAxes(jid);
+                ByteBuffer buttons = GLFW.glfwGetJoystickButtons(jid);
 
-                    if ((buttons != null ? buttons.get(0) : 0) == 1) System.out.println("Button A is pressed");
-                }
+                if ((buttons != null ? buttons.get(0) : 0) == 1) out.println("Button A is pressed");
             }
         }
     }

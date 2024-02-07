@@ -20,6 +20,7 @@ package net.logandhillon.controllerlink.client;
 
 import net.logandhillon.controllerlink.Header;
 import net.logandhillon.controllerlink.UnexpectedServerException;
+import net.logandhillon.controllerlink.gamepad.GamepadInputHandler;
 import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -53,6 +54,8 @@ public final class ClientMain {
                 Header remoteHeader = Header.fromString(in.readLine());
                 if (remoteHeader == null || remoteHeader.isInvalid(Header.Environment.SERVER)) throw new UnexpectedServerException(remoteHeader);
                 LOG.info("Connected to {} server v{}", remoteHeader.name, remoteHeader.version);
+
+                while (true) new GamepadInputHandler(out).handle();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
