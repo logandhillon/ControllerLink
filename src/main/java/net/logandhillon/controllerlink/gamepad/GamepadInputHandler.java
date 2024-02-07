@@ -57,7 +57,7 @@ public class GamepadInputHandler {
                     ByteBuffer buttons = GLFW.glfwGetJoystickButtons(jid);
 
                     for (int i = 0; i < buttons.capacity(); i++) {
-                        if (buttons.get(i) == 1) out.println(jid+":"+i+":"+1);
+                        if (buttons.get(i) == 1) out.println(new InputPacket(jid, i, 1));
                     }
                 }
             }
