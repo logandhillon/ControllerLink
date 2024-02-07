@@ -18,13 +18,45 @@
 
 package net.logandhillon.controllerlink.client;
 
+import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 public class ClientMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientMain.class);
 
     public static void start(String[] args) {
         LOG.info("Starting ControllerLink client");
+
+        InetSocketAddress address = getSocketAddress(args);
+        if (address == null) throw new NullPointerException("Could not find target! Do not forget to pass a target IP with --target xxx.xxx.xxx.xxx");
+
+        LOG.info("Connecting to {}", address);
+
+        try (Socket socket = new Socket()) {
+            socket.connect(address);
+            LOG.info("Connected to {}", socket);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Gets the socket address from command-line args
+     */
+    private static InetSocketAddress getSocketAddress(String[] args) {
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("--target") && args.length > i+1) {
+                String[] parts = args[i+1].split(":"); // host, port
+                int port = (parts.length > 1) ? Integer.parseInt(parts[1]) : ServerMain.DEFAULT_PORT;
+                return new InetSocketAddress(parts[0], port);
+            }
+        }
+        return null;
     }
 }
