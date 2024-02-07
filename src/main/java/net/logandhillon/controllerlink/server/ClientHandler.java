@@ -79,7 +79,10 @@ public class ClientHandler {
                     continue;
                 }
 
-                if (packet.command.equals("cmd")) if (packet.content.equals("ver")) out.println(ServerMain.HEADER);
+                if (packet.command.equals("cmd")) { if (packet.content.equals("ver")) out.println(ServerMain.HEADER); }
+                else if (packet.command.equals("in")) {
+                    // TODO: 02-07-2024 Handle joystick input (e.g. 0;0;1) that thing
+                }
             }
 
         } catch (IOException e) {

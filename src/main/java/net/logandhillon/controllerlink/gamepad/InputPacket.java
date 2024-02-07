@@ -37,6 +37,6 @@ public class InputPacket {
 
     @Override
     public String toString() {
-        return joystickId+";"+buttonId+";"+buttonVal;
+        return "in:"+joystickId+";"+buttonId+";"+buttonVal;
     }
 }
