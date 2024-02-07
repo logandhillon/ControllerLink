@@ -29,7 +29,7 @@ public class ControllerLinkPacket {
 
     public static ControllerLinkPacket fromString(String s) {
         String[] parts = s.split(":");
-        if (parts.length < 1) return null;
+        if (parts.length < 2) return null;
         return new ControllerLinkPacket(parts[0], parts[1]);
     }
 }

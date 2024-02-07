@@ -106,7 +106,13 @@ public class ClientHandler {
 
                 if (packet.command.equals("cmd")) { if (packet.content.equals("ver")) out.println(ServerMain.HEADER); }
                 else if (packet.command.equals("in")) {
-                    System.out.println(InputPacket.fromString(packet.content).buttonId());
+                    InputPacket input = InputPacket.fromString(packet.content);
+                    if (input == null) {
+                        out.println("Bad input packet");
+                        return;
+                    }
+                    // TODO: 02-07-2024 Implement virtual gamepad
+                    System.out.printf("(joystick #%s) button #%s has value %s%n", input.joystickId(), input.buttonId(), input.buttonVal());
                 }
             }
 
