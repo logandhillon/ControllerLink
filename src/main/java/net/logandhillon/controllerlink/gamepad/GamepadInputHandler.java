@@ -18,6 +18,8 @@
 
 package net.logandhillon.controllerlink.gamepad;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWJoystickCallback;
 
@@ -26,7 +28,8 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 public class GamepadInputHandler {
-    private PrintWriter out;
+    private static final Logger LOG = LoggerContext.getContext().getLogger(GamepadInputHandler.class);
+    private final PrintWriter out;
 
     public GamepadInputHandler(PrintWriter writeTo) {
         out = writeTo;
@@ -37,9 +40,9 @@ public class GamepadInputHandler {
             public void invoke(int jid, int event) {
                 System.out.println(event);
                 if (event == GLFW.GLFW_CONNECTED) {
-                    System.out.println("Gamepad connected: " + jid);
+                    LOG.info("Gamepad #{} connected", jid);
                 } else if (event == GLFW.GLFW_DISCONNECTED) {
-                    System.out.println("Gamepad disconnected: " + jid);
+                    LOG.info("Gamepad #{} disconnected", jid);
                 }
             }
         });
@@ -55,6 +58,7 @@ public class GamepadInputHandler {
                     // TODO: 02-07-2024 Handle axes
                     FloatBuffer axes = GLFW.glfwGetJoystickAxes(jid);
                     ByteBuffer buttons = GLFW.glfwGetJoystickButtons(jid);
+                    if (buttons == null) continue;
 
                     for (int i = 0; i < buttons.capacity(); i++) {
                         if (buttons.get(i) == 1) out.println(new InputPacket(jid, i, 1));
