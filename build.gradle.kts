@@ -20,6 +20,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.apache.logging.log4j:log4j-core:2.22.1")
     implementation("org.lwjgl:lwjgl:3.3.3")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("commons-io:commons-io:2.15.1")
     lwjgl {
         implementation(Lwjgl.Module.glfw)
     }
