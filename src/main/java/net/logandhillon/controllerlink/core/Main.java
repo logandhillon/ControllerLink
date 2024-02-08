@@ -23,6 +23,7 @@ import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -40,7 +41,12 @@ public final class Main {
             switch (arg) {
                 case "--server":
                 case "-S":
-                    ServerMain.start(args);
+                    try {
+                        ServerMain.start(args);
+                    } catch (FileNotFoundException e) {
+                        // TODO: 02-08-2024 handle missing files
+                        throw new RuntimeException(e);
+                    }
                     missingEntrypoint = false;
                     break label;
                 case "--client":
