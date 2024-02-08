@@ -19,27 +19,54 @@
 package net.logandhillon.controllerlink.server;
 
 import net.logandhillon.controllerlink.Header;
+import net.logandhillon.controllerlink.config.UserConfig;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.*;
+import java.security.cert.CertificateException;
 
 public final class ServerMain {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ServerMain.class);
     public static final int DEFAULT_PORT = 4350;
     public static final Header HEADER = new Header(Header.Environment.SERVER);
 
-    public static void start(String[] args) {
+    public static void start(String[] args) throws KeyStoreException, IOException, CertificateException, UnrecoverableKeyException, KeyManagementException {
         int port = DEFAULT_PORT;
 
         for (int i = 0; i < args.length; i++)
             if (args[i].equals("--port") && args.length > i + 1)
                 port = Integer.parseInt(args[i + 1]);
 
-        try (ServerSocket socket = new ServerSocket(port)) {
+        char[] ksPass = UserConfig.INSTANCE.keystorePassword().toCharArray();
+        KeyStore keyStore = KeyStore.getInstance("JKS");
+        SSLContext sslContext;
+        try (InputStream keystoreIS = new FileInputStream(UserConfig.INSTANCE.keystorePath())) {
+            keyStore.load(keystoreIS, ksPass);
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            kmf.init(keyStore, ksPass);
+
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(kmf.getKeyManagers(), null, null);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        SSLServerSocketFactory socketFactory = sslContext.getServerSocketFactory();
+
+        try (SSLServerSocket socket = (SSLServerSocket) socketFactory.createServerSocket(port)) {
             LOG.info("Starting ControllerLink server v{} on {}", HEADER.version, new InetSocketAddress(DEFAULT_PORT));
 
             //noinspection InfiniteLoopStatement
