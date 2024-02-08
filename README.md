@@ -24,3 +24,17 @@ You can only allow clients of the same brand to connect with `--strictHeaders`
 
 Once a machine attempts to connect, and you approve it, you may use the controller from the remote machine as if it was
 on this machine.
+
+## CLI Args
+
+| Arg                             | Description                                                      | Required               |
+|---------------------------------|------------------------------------------------------------------|------------------------|
+| `--server`                      | Starts a server                                                  | Yes                    |
+| `--client`                      | Starts a client                                                  | Yes                    |
+| `--port xxxx`                   | Sets the port for the server to listen to                        | No, defaults to `4350` |
+| `--target xxx.xxx.xxx.xxx:xxxx` | Sets the server address for the client                           | Yes                    |
+| `--strictHeaders`               | Enforces client headers to match the server header on connection | No, defaults to no     |
+
+### strictHeaders
+
+This will only allow clients of the same type to connect, it is only recommended if you do not want third-party clients connecting.
