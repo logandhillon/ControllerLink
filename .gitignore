@@ -46,4 +46,5 @@ bin/
 
 ### ControllerLink ###
 logs/
-src/main/resources/keystore.jks
+keystore.jks
+config.json
