@@ -24,6 +24,7 @@ import net.logandhillon.controllerlink.gamepad.InputPacket;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
+import javax.net.ssl.SSLSocket;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,13 +38,13 @@ public class ClientHandler {
     private static final Logger LOG = LoggerContext.getContext().getLogger(ClientHandler.class);
     private static final ArrayList<Socket> connectedClients = new ArrayList<>();
     private static final Scanner STDIN = new Scanner(System.in);
-    private final Socket client;
+    private final SSLSocket client;
 
-    private ClientHandler(Socket clientSocket) {
+    private ClientHandler(SSLSocket clientSocket) {
         this.client = clientSocket;
     }
 
-    public static void handle(Socket client) {
+    public static void handle(SSLSocket client) {
         System.out.print("Allow "+client.getInetAddress()+" to connect? [y/n] ");
         out:
         try {

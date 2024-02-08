@@ -23,10 +23,7 @@ import net.logandhillon.controllerlink.config.UserConfig;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,7 +69,7 @@ public final class ServerMain {
             //noinspection InfiniteLoopStatement
             while (true) {
                 if (!socket.isBound()) continue;
-                Socket client = socket.accept();
+                SSLSocket client = (SSLSocket) socket.accept();
                 ClientHandler.handle(client);
             }
         } catch (IOException e) {

@@ -23,11 +23,17 @@ import net.logandhillon.controllerlink.server.ServerMain;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
 public final class Main {
     private static final Logger LOG = LoggerContext.getContext().getLogger(Main.class);
     public static boolean strictHeaders = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnrecoverableKeyException, CertificateException, KeyStoreException, IOException, KeyManagementException {
         boolean missingEntrypoint = true;
         label:
         for (String arg: args) {

@@ -47,4 +47,4 @@ bin/
 ### ControllerLink ###
 logs/
 keystore.jks
-config.json
+user_config.json
